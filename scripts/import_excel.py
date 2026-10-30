@@ -22,7 +22,8 @@ def excel_date(value):
     if isinstance(value, datetime):
         return value.date().isoformat()
     return str(value)[:10]
-drivers = [r[1].strip() for r in rows("Drivers", "A4:B40") if isinstance(r[1], str) and isinstance(r[0], (int, float))]
+EXCLUDED_DRIVERS = {"Ovi"}  # Retired from the Fall 2026 championship; workbook may still contain historical slots.
+drivers = [r[1].strip() for r in rows("Drivers", "A4:B40") if isinstance(r[1], str) and isinstance(r[0], (int, float)) and r[1].strip() not in EXCLUDED_DRIVERS]
 rounds = []
 for r in rows("Schedule", "A5:H100"):
     if not isinstance(r[0], (int, float)):
