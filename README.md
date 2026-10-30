@@ -13,7 +13,7 @@ npm run dev
 Open http://localhost:3000. Pages: Overview, Standings, Calendar, Results, Drivers.
 
 ## Excel import
-The checked-in `data/championship.json` is a snapshot of the supplied **BFR Fall 2026 League.xlsx** workbook. The site reads this file at build time. To refresh it after editing the workbook:
+Ovi is deliberately excluded by the importer (five active competitors), even while he remains in the historical Excel workbook.\n\nThe checked-in `data/championship.json` is a snapshot of the supplied **BFR Fall 2026 League.xlsx** workbook. The site reads this file at build time. To refresh it after editing the workbook:
 
 ```bash
 python scripts/import_excel.py "/path/to/BFR Fall 2026 League.xlsx"
@@ -22,7 +22,7 @@ npm run build
 
 Requires Python 3 and `pip install artifact-tool`. The importer reads Schedule, Drivers, and Season Results. Commit the updated JSON to publish changes after deployment. The original workbook is not committed.
 
-## Scoring
+## Validation\n\n```bash\nnpm test\nnpm run typecheck\nnpm run build\n```\n\nGitHub Actions runs these checks for every push and pull request.\n\n## Scoring
 Qualifying positions 1–3: 3, 2, 1 points. Race positions 1–6: 25, 22, 20, 18, 16, 14. Achievement bonuses follow the workbook. Five-AI bonus replaces three-AI bonus. Bonus cap 10 except in Round 10; Round 10 multiplies race-position points by 1.5 only. Best 8 of 10 round totals count. Only entered results are counted. Tie-break ordering is provisional until the league confirms its official rules.
 
 ## Current limitations
