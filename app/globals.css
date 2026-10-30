@@ -8,3 +8,8 @@
 
 /* Show uploaded BFR logo on desktop and mobile. */
 .brand-fallback{display:none}.header-logo{display:block}
+
+/* Homepage hero: original BFR logo as a subtle background watermark. */
+.hero{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(23,26,33,.96) 0%,rgba(23,26,33,.90) 55%,rgba(23,26,33,.68) 100%),url("/bfr-logo.webp") right 30px center / min(42%,340px) auto no-repeat,#171a21}
+.hero>*{position:relative;z-index:1}
+@media(max-width:740px){.hero{background:linear-gradient(180deg,rgba(23,26,33,.93),rgba(23,26,33,.80)),url("/bfr-logo.webp") center bottom 12px / 190px auto no-repeat,#171a21}}
