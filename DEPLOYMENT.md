@@ -7,7 +7,7 @@
 5. In **Project → Settings → Domains**, optionally add a custom domain. Follow the exact DNS records Vercel displays.
 6. Later pushes to `main` trigger redeployments. The current data source is `data/championship.json`, not a live workbook feed.
 
-Before deployment, run `npm ci && npm test && npm run typecheck && npm run build`. The GitHub Actions workflow also validates pushes and PRs.
+Before deployment, run `npm install && npm test && npm run typecheck && npm run build`. The GitHub Actions workflow also validates pushes and PRs.
 
 ## Data refresh
 
