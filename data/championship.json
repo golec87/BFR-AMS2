@@ -1,0 +1,226 @@
+{
+  "name": "Black Flag Racing",
+  "season": "Fall 2026",
+  "timezone": "America/Chicago",
+  "drivers": [
+    "Craig",
+    "Dom",
+    "Kyle",
+    "Michal",
+    "Marcin",
+    "Ovi"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "date": "2026-10-15",
+      "time": "8:00 PM CT",
+      "event": "Brazilian Season Opener",
+      "track": "Interlagos GP",
+      "class": "GT3 Gen 2",
+      "format": "35-minute feature",
+      "notes": "Standard points"
+    },
+    {
+      "round": 2,
+      "date": "2026-10-22",
+      "time": "8:00 PM CT",
+      "event": "American Prototype Challenge",
+      "track": "Road America",
+      "class": "GTP / Hypercars",
+      "format": "40-minute feature",
+      "notes": "Required pit stop"
+    },
+    {
+      "round": 3,
+      "date": "2026-10-29",
+      "time": "8:00 PM CT",
+      "event": "Mountain Mayhem",
+      "track": "Laguna Seca",
+      "class": "GT4",
+      "format": "35-minute feature",
+      "notes": "Standard points"
+    },
+    {
+      "round": 4,
+      "date": "2026-11-05",
+      "time": "8:00 PM CT",
+      "event": "Halloween Touring Car Night",
+      "track": "Nürburgring GP",
+      "class": "DTM / Group A",
+      "format": "Two 20-minute races",
+      "notes": "Race 2 reverse grid"
+    },
+    {
+      "round": 5,
+      "date": "2026-11-12",
+      "time": "8:00 PM CT",
+      "event": "Group C Thunder",
+      "track": "Spa-Francorchamps",
+      "class": "Group C",
+      "format": "40-minute feature",
+      "notes": "Required pit stop"
+    },
+    {
+      "round": 6,
+      "date": "2026-11-19",
+      "time": "8:00 PM CT",
+      "event": "Modern Formula Sprint",
+      "track": "Silverstone GP",
+      "class": "Formula Ultimate Gen 2",
+      "format": "15-minute sprint + 30-minute feature",
+      "notes": "Two scored races; required pit stop"
+    },
+    {
+      "round": 7,
+      "date": "2026-11-24",
+      "time": "8:00 PM CT",
+      "event": "Thanksgiving IMSA Night",
+      "track": "Daytona Road Course",
+      "class": "GTE",
+      "format": "35-minute feature",
+      "notes": "Tuesday race; required pit stop"
+    },
+    {
+      "round": 8,
+      "date": "2026-12-03",
+      "time": "8:00 PM CT",
+      "event": "IndyCar Throwback",
+      "track": "Watkins Glen",
+      "class": "Formula USA Gen 2",
+      "format": "Two 15-minute races",
+      "notes": "Reverse grid race 2"
+    },
+    {
+      "round": 9,
+      "date": "2026-12-10",
+      "time": "8:00 PM CT",
+      "event": "Le Mans Prototype Challenge",
+      "track": "Le Mans",
+      "class": "LMDh",
+      "format": "45-minute feature",
+      "notes": "Required pit stop"
+    },
+    {
+      "round": 10,
+      "date": "2026-12-17",
+      "time": "8:00 PM CT",
+      "event": "Championship Finale",
+      "track": "Bathurst 2020",
+      "class": "Super V8",
+      "format": "Two 20-minute races",
+      "notes": "1.5x finishing points"
+    }
+  ],
+  "results": [
+    {
+      "driver": "Craig",
+      "round": 1,
+      "qualifying": 2,
+      "race1": 2,
+      "race2": null,
+      "bonuses": {}
+    },
+    {
+      "driver": "Michal",
+      "round": 1,
+      "qualifying": 1,
+      "race1": 1,
+      "race2": null,
+      "bonuses": {}
+    },
+    {
+      "driver": "Marcin",
+      "round": 1,
+      "qualifying": 3,
+      "race1": 3,
+      "race2": null,
+      "bonuses": {}
+    },
+    {
+      "driver": "Craig",
+      "round": 2,
+      "qualifying": 4,
+      "race1": 4,
+      "race2": null,
+      "bonuses": {
+        "ahead5AI": true
+      }
+    },
+    {
+      "driver": "Dom",
+      "round": 2,
+      "qualifying": 1,
+      "race1": 1,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead5AI": true,
+        "fastestLap": true,
+        "cleanRace": true,
+        "beatLeader": true
+      }
+    },
+    {
+      "driver": "Michal",
+      "round": 2,
+      "qualifying": 2,
+      "race1": 2,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead5AI": true,
+        "cleanRace": true
+      }
+    },
+    {
+      "driver": "Marcin",
+      "round": 2,
+      "qualifying": 3,
+      "race1": 3,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "beatHigher": true,
+        "ahead5AI": true,
+        "mostGained": true
+      }
+    },
+    {
+      "driver": "Dom",
+      "round": 3,
+      "qualifying": 1,
+      "race1": 1,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "beatHigher": true,
+        "ahead5AI": true,
+        "fastestLap": true
+      }
+    },
+    {
+      "driver": "Kyle",
+      "round": 3,
+      "qualifying": 3,
+      "race1": 3,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "mostGained": true
+      }
+    },
+    {
+      "driver": "Marcin",
+      "round": 3,
+      "qualifying": 2,
+      "race1": 2,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "beatHigher": true,
+        "ahead5AI": true
+      }
+    }
+  ]
+}
