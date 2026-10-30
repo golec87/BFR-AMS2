@@ -22,7 +22,7 @@ npm run build
 
 Requires Python 3 and `pip install artifact-tool`. The importer reads Schedule, Drivers, and Season Results. Commit the updated JSON to publish changes after deployment. The original workbook is not committed.
 
-## Validation\n\n```bash\nnpm test\nnpm run typecheck\nnpm run build\n```\n\nGitHub Actions runs these checks for every push and pull request.\n\n## Scoring
+## Validation\n\n```bash\nnpm test\nnpm run typecheck\nnpm run build\n```\n\nGitHub Actions is configured to run these checks for every push and pull request. Check the Actions tab for the first verified result; local package installation was unavailable in the initial development environment.\n\n## Scoring
 Qualifying positions 1–3: 3, 2, 1 points. Race positions 1–6: 25, 22, 20, 18, 16, 14. Achievement bonuses follow the workbook. Five-AI bonus replaces three-AI bonus. Bonus cap 10 except in Round 10; Round 10 multiplies race-position points by 1.5 only. Best 8 of 10 round totals count. Only entered results are counted. Tie-break ordering is provisional until the league confirms its official rules.
 
 ## Current limitations
