@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-const links=[["/","Overview"],["/standings","Standings"],["/calendar","Calendar"],["/results","Results"],["/drivers","Drivers"]] as const;
+const links=[["/","Overview"],["/standings","Standings"],["/calendar","Calendar"],["/results","Results"],["/points","Points Breakdown"],["/drivers","Drivers"]] as const;
 export default function SiteNav(){
  const pathname=usePathname();
  const [open,setOpen]=useState(false);
