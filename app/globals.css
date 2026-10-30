@@ -6,5 +6,5 @@
 /* Original Black Flag Racing logo */
 .header-logo{display:block;width:auto;height:56px;max-width:230px;object-fit:contain}.brand{display:inline-flex;align-items:center}.brand-fallback{display:none}.hero-logo{display:block;width:min(100%,390px);height:auto;object-fit:contain;margin:0 0 26px}.topbar{min-height:100px}@media(max-width:740px){.header-logo{height:43px;max-width:190px}.hero-logo{width:min(100%,300px)}.topbar{min-height:80px}}
 
-/* Show BFR branding until the uploaded logo is available. */
-.brand-fallback{display:inline-block;font-weight:900;font-size:28px;color:#f9b728}.header-logo{display:none}
+/* Show uploaded BFR logo on desktop and mobile. */
+.brand-fallback{display:none}.header-logo{display:block}
