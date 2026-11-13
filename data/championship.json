@@ -220,6 +220,52 @@
         "beatHigher": true,
         "ahead5AI": true
       }
+    },
+    {
+      "driver": "Craig",
+      "round": 4,
+      "qualifying": 3,
+      "race1": 4,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead3AI": true
+      }
+    },
+    {
+      "driver": "Dom",
+      "round": 4,
+      "qualifying": 1,
+      "race1": 2,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead5AI": true,
+        "mostGained": true
+      }
+    },
+    {
+      "driver": "Michal",
+      "round": 4,
+      "qualifying": 2,
+      "race1": 1,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead5AI": true,
+        "fastestLap": true
+      }
+    },
+    {
+      "driver": "Marcin",
+      "round": 4,
+      "qualifying": 4,
+      "race1": 3,
+      "race2": null,
+      "bonuses": {
+        "beatAverage": true,
+        "ahead5AI": true
+      }
     }
   ]
 }
