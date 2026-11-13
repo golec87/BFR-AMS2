@@ -65,3 +65,7 @@
 .topbar .brand{display:inline-flex;align-items:center;flex-shrink:0}
 .topbar .brand .header-logo{display:block;width:240px;height:auto;max-width:100%;max-height:84px;object-fit:contain}
 @media(max-width:740px){.topbar .brand .header-logo{width:168px;max-height:58px}}
+
+/* Calendar and results completion indicators */
+.race-status{display:inline-flex;align-items:center;border:1px solid #4c4d52;border-radius:999px;padding:4px 9px;margin-left:5px;color:#aeb4c0;font-size:11px;font-weight:800;letter-spacing:.4px;white-space:nowrap}
+.race-status-completed{border-color:#367b57;background:#173e2c;color:#9ee8bd}
