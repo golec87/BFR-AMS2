@@ -29,6 +29,8 @@ V2 writes to `C:\BFR\collector-output-v2\YYYYMMDD-HHMMSS\`:
 - `events.jsonl`: chronological session, pit, and driver-state events
 - `001-practice\report.json`, `002-qualifying\report.json`, `003-race\report.json`, etc.
 - `start.json`, `last.json`, `grid.json`, `finish-observed.json`, `checkpoint.json` as applicable
+- `lap_times.csv`: completed-lap timing for all drivers detected by CREST2
+- `lap_position_chart.html`: open locally in a browser to select a driver and overlay lap times with race position changes
 
 One checkpoint is overwritten every 60 seconds; V2 does not write full snapshots every second. This greatly reduces storage, but short-lived events between polls can still be missed. Qualifying and race classifications are **provisional** until checked against AMS2's official results screen.
 
@@ -48,4 +50,5 @@ Unknown human names are included in the provisional classification but not marke
 - AMS2 `mRaceState=4` can indicate disqualification; a single driver's state does **not** prove the entire field has finished.
 - Pit mode/schedule transitions and disqualification are recorded, but CREST2 does not provide the exact penalty reason.
 - A disconnect ends the current segment as interrupted; reconnecting starts a new segment.
+- Lap times are recorded only when CREST2 reports a completed-lap increment and a valid `mLastLapTimes`. If a polling gap skips laps, those lap times are unavailable; they are not fabricated.
 - No live scoring, GitHub upload, or background startup task.
