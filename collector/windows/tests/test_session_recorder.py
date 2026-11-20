@@ -2,10 +2,12 @@
 import importlib.util
 import json
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "session_recorder.py"
+sys.path.insert(0, str(SCRIPT.parent))
 spec = importlib.util.spec_from_file_location("bfr_session_recorder", SCRIPT)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -69,6 +71,27 @@ class RecorderTests(unittest.TestCase):
             self.assertEqual(len(recorder.reports), 2)
             self.assertEqual(recorder.reports[0]["status"], "interrupted")
             self.assertEqual(recorder.reports[1]["status"], "provisional_finished")
+
+    def test_all_driver_lap_times_and_overlay_chart(self):
+        with tempfile.TemporaryDirectory() as directory:
+            recorder = module.Recorder(directory)
+            first = sample(race=1)
+            first["participants"]["mParticipantInfo"][0]["mLapsCompleted"] = 0
+            first["participants"]["mParticipantInfo"][1]["mLapsCompleted"] = 0
+            recorder.consume(first, moment=1)
+            next_lap = sample(race=2)
+            next_lap["participants"]["mParticipantInfo"][0]["mLapsCompleted"] = 1
+            next_lap["participants"]["mParticipantInfo"][0]["mLastLapTimes"] = 94.5
+            next_lap["participants"]["mParticipantInfo"][1]["mLapsCompleted"] = 1
+            next_lap["participants"]["mParticipantInfo"][1]["mLastLapTimes"] = 93.2
+            recorder.consume(next_lap, moment=2)
+            recorder.finish("recorder_stopped")
+            race = Path(directory) / "001-race"
+            rows = recorder.reports[0]["lap_times"]
+            self.assertEqual(len(rows), 2)
+            self.assertEqual({x["driver"] for x in rows}, {"domo87", "mciurej"})
+            self.assertTrue((race / "lap_times.csv").exists())
+            self.assertIn("domo87", (race / "lap_position_chart.html").read_text(encoding="utf-8"))
 
     def test_pit_diagnostics_and_compact_storage(self):
         with tempfile.TemporaryDirectory() as directory:
