@@ -1,31 +1,51 @@
-# BFR Automatic Session Recorder — Windows test
+# BFR Recorder V2 — Windows 11 test guide
 
-This is an **experimental local-only** CREST2 telemetry recorder. It does not upload to GitHub, score league points, or modify the live website.
+V2 reads CREST2 locally and writes provisional session reports. **It does not upload results, update the website, or award championship points.**
 
-## Requirements
-- Windows 11 with AMS2 configured for Shared Memory / Project CARS 2
-- CREST2.exe running and serving http://localhost:8180/crest2/v1/api
-- Python 3 (no third-party packages)
+## Before starting
 
-## Run
-1. Download the updated `feature/live-race-control` branch as a ZIP, extract it, and open PowerShell in its root folder.
-2. Start CREST2.exe.
-3. Run:
+1. Update your local `C:\BFR` folder from the GitHub `feature/live-race-control` branch (replace existing files).
+2. Start CREST2.exe. AMS2 must have Shared Memory set to Project CARS 2.
+3. Open PowerShell in `C:\BFR`.
+
+Run the tests first:
+
+```powershell
+py -3 -m unittest discover -s collector/windows/tests -v
+```
+
+Start recording:
 
 ```powershell
 py -3 collector/windows/session_recorder.py
 ```
 
-4. Run an AMS2 practice → qualifying → race weekend. Keep the recorder open throughout, including the results screens.
-5. Press Ctrl+C when finished.
+Keep PowerShell and CREST2 running through practice, qualifying, and race, including results screens. Stop with Ctrl+C.
 
-Output appears under `collector-output/YYYYMMDD-HHMMSS/`. The recorder saves **one full JSON file per second**, plus `*-end-*.json` snapshots on session changes and `latest-race-finish.json` when a race-finished state is detected. It can create many files; delete old test folders after reviewing.
+## Output
 
-## What to send back
-Zip the newest folder inside `collector-output` and upload it. Compare qualifying and race classifications with AMS2 results screenshots, especially before treating any classification as official.
+V2 writes to `C:\BFR\collector-output-v2\YYYYMMDD-HHMMSS\`:
 
-## Limitations
-- This is an untested first implementation. Session state values and transitions need confirmation with real practice and qualifying captures.
-- CREST2's race-finished flag can appear while other competitors are still on track. Finishing classification is provisional.
-- No persistent upload, multiplayer validation, automatic scoring, or Windows startup integration yet.
-- Keep CREST2 running; if disconnected, the recorder retries.
+- `events.jsonl`: chronological session, pit, and driver-state events
+- `001-practice\report.json`, `002-qualifying\report.json`, `003-race\report.json`, etc.
+- `start.json`, `last.json`, `grid.json`, `finish-observed.json`, `checkpoint.json` as applicable
+
+One checkpoint is overwritten every 60 seconds; V2 does not write full snapshots every second. This greatly reduces storage, but short-lived events between polls can still be missed. Qualifying and race classifications are **provisional** until checked against AMS2's official results screen.
+
+## Driver mapping
+
+- domo87 → Dom
+- mciurej → Michal
+- camartin → Craig
+- gluc → Marcin
+- Kyle → not configured (tag unknown)
+
+Unknown human names are included in the provisional classification but not marked as BFR drivers. The recorder does not reliably distinguish unknown human drivers from AI yet.
+
+## Known limitations and safety
+
+- The first real capture (`bfr 1.zip`) showed practice → qualifying → race, an interrupted race, a second race, and disqualification status 4. Regression tests model these patterns; further on-machine validation is required.
+- AMS2 `mRaceState=4` can indicate disqualification; a single driver's state does **not** prove the entire field has finished.
+- Pit mode/schedule transitions and disqualification are recorded, but CREST2 does not provide the exact penalty reason.
+- A disconnect ends the current segment as interrupted; reconnecting starts a new segment.
+- No live scoring, GitHub upload, or background startup task.
