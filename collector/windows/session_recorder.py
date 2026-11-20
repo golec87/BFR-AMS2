@@ -90,6 +90,7 @@ class Recorder:
         self.last_time = None
         self.last_checkpoint = 0
         self.pit_previous = {}
+        self.position_history = {}
         self.race_started = False
         self.race_seen_finish = False
         self.last_game = None
@@ -109,6 +110,7 @@ class Recorder:
         self.active = {"type": session, "folder": folder, "signature": signature(snapshot),
                        "started_at": stamp(), "best": None, "grid": None, "finish": None}
         self.pit_previous = {}
+        self.position_history = {}
         self.race_started = False
         self.race_seen_finish = False
         self.last_checkpoint = moment
@@ -144,6 +146,21 @@ class Recorder:
                     start = starts.get(r["gamer_tag"].lower())
                     if isinstance(start, int) and isinstance(pos, int):
                         report["positions_gained"][r["gamer_tag"]] = start - pos
+        if active["type"] == "race":
+            report["position_tracking"] = {}
+            for tag, history in self.position_history.items():
+                positions = [p["position"] for p in history]
+                start = next((r["position"] for r in (active["grid"] or [])
+                              if r["gamer_tag"].lower() == tag.lower()), None)
+                final = next((r["position"] for r in rows if r["gamer_tag"].lower() == tag.lower()), None)
+                report["position_tracking"][tag] = {
+                    "start": start, "last_recorded": final,
+                    "highest_position": min(positions),
+                    "lowest_position": max(positions),
+                    "biggest_gain_from_start": max((start - p for p in positions), default=None)
+                        if isinstance(start, int) else None,
+                    "changes": history,
+                }
         save(folder / "report.json", report)
         self.reports.append(report)
         self.emit("session_end", session=active["type"], reason=reason, folder=folder.name)
@@ -187,7 +204,21 @@ class Recorder:
                 active["grid"] = rows
                 save(folder / "grid.json", rows)
                 self.emit("grid_captured", drivers=len(rows))
-            # Log local pit telemetry and all BFR drivers' status/pit transitions.
+            # Track every driver's position changes without full per-second snapshots.
+            for row in rows:
+                tag = row["gamer_tag"]
+                pos = row["position"]
+                if not isinstance(pos, int) or pos < 1:
+                    continue
+                history = self.position_history.setdefault(tag, [])
+                if not history or history[-1]["position"] != pos:
+                    entry = {"at": stamp(), "position": pos, "lap": row["laps"]}
+                    if history:
+                        self.emit("position_change", driver=tag,
+                                  previous=history[-1]["position"], current=pos,
+                                  lap=row["laps"])
+                    history.append(entry)
+                        # Log local pit telemetry and all BFR drivers' status/pit transitions.
             pit = snapshot.get("pitInfo", {})
             viewed = snapshot.get("participants", {}).get("mViewedParticipantIndex")
             all_participants = snapshot.get("participants", {}).get("mParticipantInfo", [])
