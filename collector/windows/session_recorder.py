@@ -11,6 +11,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from lap_chart import lap_updates, write_lap_outputs
+
 SESSION_NAMES = {1: "practice", 2: "test", 3: "qualifying", 4: "formation", 5: "race", 6: "time_attack"}
 DRIVERS = {"domo87": "Dom", "mciurej": "Michal", "camartin": "Craig", "gluc": "Marcin"}
 # PCARS2 shared memory: 3 finished, 4 disqualified, 5 retired, 6 DNF.
@@ -91,6 +93,8 @@ class Recorder:
         self.last_checkpoint = 0
         self.pit_previous = {}
         self.position_history = {}
+        self.lap_previous = {}
+        self.lap_records = []
         self.race_started = False
         self.race_seen_finish = False
         self.last_game = None
@@ -111,6 +115,8 @@ class Recorder:
                        "started_at": stamp(), "best": None, "grid": None, "finish": None}
         self.pit_previous = {}
         self.position_history = {}
+        self.lap_previous = {}
+        self.lap_records = []
         self.race_started = False
         self.race_seen_finish = False
         self.last_checkpoint = moment
@@ -161,6 +167,9 @@ class Recorder:
                         if isinstance(start, int) else None,
                     "changes": history,
                 }
+        if active["type"] == "race":
+            report["lap_times"] = self.lap_records
+            write_lap_outputs(folder, self.lap_records, report["position_tracking"])
         save(folder / "report.json", report)
         self.reports.append(report)
         self.emit("session_end", session=active["type"], reason=reason, folder=folder.name)
@@ -204,6 +213,10 @@ class Recorder:
                 active["grid"] = rows
                 save(folder / "grid.json", rows)
                 self.emit("grid_captured", drivers=len(rows))
+            # Capture completed laps for every driver; never invent missing times.
+            for lap in lap_updates(snapshot, self.lap_previous):
+                self.lap_records.append(lap)
+                self.emit("lap_completed", **lap)
             # Track every driver's position changes without full per-second snapshots.
             for row in rows:
                 tag = row["gamer_tag"]
